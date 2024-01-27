@@ -155,7 +155,7 @@ export default function Home() {
               </FormItem>
             )}
             />
-          <Button type="submit" aria-disabled={form.formState.isLoading}>Enviar</Button>
+          <Button type="submit" disabled={form.formState.isLoading || form.formState.isSubmitting}>{form.formState.isSubmitting ? 'Enviando...' : 'Enviar'}</Button>
         </form>
       </Form>
     </main>
