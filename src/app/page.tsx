@@ -28,14 +28,8 @@ const formSchema = z.object({
   }),
   materialsProduced: z.string({
     required_error: "Obrigatorio",
-    description: "Quantos materiais você conseguiu produzir hoje?"
+    description: "Quais materiais você produziu hoje?"
   }).min(1, { message: "Obrigatorio" }),
-  planForTomorrow: z.string({
-    required_error: "Obrigatorio",
-    description: "No que pretende trabalhar amanhã?"
-  }).min(2, {
-    message: "Obrigatorio",
-  }),
   observations: z.string({
     description: "Observações"
   }).optional()
@@ -72,9 +66,19 @@ export default function Home() {
       form.setValue("name", "");
       form.setValue("dayEvaluation", "Neutro");
       form.setValue("materialsProduced", "");
-      form.setValue("planForTomorrow", "");
       form.setValue("observations", "");
     }
+  }
+
+  if(form.formState.isSubmitSuccessful) {
+    return (
+      <main className="flex justify-center items-center min-h-screen bg-slate-100">
+        <div className="flex flex-col items-center space-y-4">
+          <h1 className="text-3xl font-bold">Obrigado por enviar seu formulário</h1>
+          <p className="text-gray-500">Seu formulário foi enviado com sucesso</p>
+        </div>
+      </main>
+    )
   }
 
   return (
@@ -88,7 +92,7 @@ export default function Home() {
               <FormItem>
                 <FormLabel>Nome</FormLabel>
                 <FormControl>
-                  <Input placeholder="Bruce Wayne" {...field} />
+                  <Input placeholder="Bob Jamaica" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -102,13 +106,13 @@ export default function Home() {
                 <FormLabel>Como foi seu dia hoje?</FormLabel>
                 <FormControl>
                   <Select {...field} onValueChange={field.onChange} defaultValue={field.value}>
-                    <SelectTrigger className="w-[180px]">
+                    <SelectTrigger>
                       <SelectValue placeholder="Selecione" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="Produtivo">Produtivo</SelectItem>
                       <SelectItem value="Neutro">Neutro</SelectItem>
-                      <SelectItem value="Improdutivo">Improdutivo</SelectItem>
+                      <SelectItem value="Improdutivo">Não produzi como gostaria</SelectItem>
                     </SelectContent>
                   </Select>
                 </FormControl>
@@ -121,22 +125,9 @@ export default function Home() {
             name="materialsProduced"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Quantos materiais você produziu hoje?</FormLabel>
+                <FormLabel>Escreva aqui quais materiais você produziu</FormLabel>
                 <FormControl>
-                  <Input placeholder="2" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-            />
-          <FormField
-            control={form.control}
-            name="planForTomorrow"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>No que pretende trabalhar amanhã?</FormLabel>
-                <FormControl>
-                  <Textarea placeholder="Pretendo..." {...field} />
+                  <Textarea placeholder="..." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>

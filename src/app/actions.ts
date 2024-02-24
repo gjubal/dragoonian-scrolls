@@ -29,7 +29,6 @@ export async function updateSheet(formData: FormValues) {
 				formData.name,
 				formData.dayEvaluation,
 				formData.materialsProduced,
-				formData.planForTomorrow,
 				formData.observations,
 			],
 		];
